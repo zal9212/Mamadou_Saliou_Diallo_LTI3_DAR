@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            padding-top: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .nav-simple {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+        }
+
+        .nav-simple a {
+            color: #666;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .nav-simple a:hover,
+        .nav-simple a.active {
+            color: #000;
+            font-weight: 600;
+        }
+
+        .brand {
+            font-weight: 700;
+            color: #000 !important;
+            font-size: 1.2rem;
+        }
+
+        .card-simple {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-simple {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-simple:hover {
+            opacity: 0.8;
+            color: #fff;
+        }
+
+        .btn-outline-simple {
+            background: transparent;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .table {
+            font-size: 0.9rem;
+        }
+
+        .table th {
+            border-top: none;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #000;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav-simple d-flex align-items-center">
+            <a href="{% url 'dashboard' %}" class="brand me-auto">Bibliothèque</a>
+            <a href="{% url 'dashboard' %}"
+                class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+            <a href="{% url 'livre_list' %}"
+                class="{% if request.resolver_match.url_name == 'livre_list' %}active{% endif %}">Livres</a>
+            <a href="{% url 'emprunt_list' %}"
+                class="{% if request.resolver_match.url_name == 'emprunt_list' %}active{% endif %}">Emprunts</a>
+        </nav>
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>

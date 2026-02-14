@@ -1,0 +1,40 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="mb-5">
+    <h1>Dashboard</h1>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="card-simple">
+            <div class="text-muted small text-uppercase mb-2">Livres Disponibles</div>
+            <div class="h2 mb-0 text-success">{{ livres_dispos }}</div>
+            <div class="small text-muted">sur {{ total_exemplaires }} exemplaires</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-simple">
+            <div class="text-muted small text-uppercase mb-2">Titres Différents</div>
+            <div class="h2 mb-0">{{ total_titres }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-simple">
+            <div class="text-muted small text-uppercase mb-2">Rupture de Stock</div>
+            <div class="h2 mb-0 {% if rupture_stock > 0 %}text-danger{% endif %}">{{ rupture_stock }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-simple">
+            <div class="text-muted small text-uppercase mb-2">Top Auteur</div>
+            <div class="h2 mb-0">{{ top_auteur }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex gap-3">
+    <a href="{% url 'livre_create' %}" class="btn-simple">Ajouter un Livre</a>
+    <a href="{% url 'emprunt_create' %}" class="btn-outline-simple text-decoration-none">Nouvel Emprunt</a>
+</div>
+{% endblock %}

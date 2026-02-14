@@ -1,0 +1,72 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Emprunts</h2>
+    <a href="{% url 'emprunt_create' %}" class="btn-simple">Nouvel Emprunt</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Livre</th>
+            <th>Emprunté le</th>
+            <th>Statut</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprunt in page_obj %}
+        <tr>
+            <td class="fw-medium text-dark">{{ emprunt.livre.titre }}</td>
+            <td>{{ emprunt.date_emprunt|date:"d/m/Y" }}</td>
+            <td>
+                {% if emprunt.date_retour %}
+                <span class="text-success small">Rendu ({{ emprunt.date_retour|date:"d/m/Y" }})</span>
+                {% else %}
+                <span class="text-warning small fw-bold">En cours</span>
+                {% endif %}
+            </td>
+            <td class="text-end">
+                <a href="{% url 'emprunt_update' emprunt.pk %}"
+                    class="text-decoration-none text-primary me-2">Modifier</a>
+                <a href="{% url 'emprunt_delete' emprunt.pk %}" class="text-decoration-none text-danger">Supprimer</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center py-5 text-muted">Aucun emprunt.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="mt-5 border-top pt-3">
+    <div class="d-flex justify-content-between align-items-center small text-muted">
+        <div>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</div>
+        <div class="d-flex gap-2 align-items-center">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="text-dark text-decoration-none">« Début</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="text-dark text-decoration-none">Précédent</a>
+            {% endif %}
+
+            <div class="d-flex gap-1">
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="fw-bold px-2 py-1 bg-light rounded text-dark">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a href="?page={{ num }}"
+                    class="text-muted text-decoration-none px-2 py-1 hover-bg-light rounded">{{ num }}</a>
+                    {% endif %}
+                    {% endfor %}
+            </div>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="text-dark text-decoration-none">Suivant</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="text-dark text-decoration-none">Fin »</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endif %}
+{% endblock %}
